@@ -69,7 +69,7 @@ Tags:<br \>
     }
 
     /**
-     * create submit forum
+     * create submit form
      * @todo move html out of here
      */
     function submitform() {

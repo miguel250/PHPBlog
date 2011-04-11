@@ -28,7 +28,7 @@ if ($handler->setUrl() == '/') {
     }
 } else {
     /**
-     * use try to see if post is in database if not show 404 page
+     * use  to see if the post is in the database if not show 404 page
      */
     try {
 
