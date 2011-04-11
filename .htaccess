@@ -1,0 +1,21 @@
+RewriteEngine On
+
+# Assuming you're running at domain root.  Change to working directory if needed.
+RewriteBase /
+
+
+#
+# Trailing slash check
+
+# Don't fix direct file links
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ $1/ [L,R=301]
+
+#
+# Finally, forward everything to your front-controller
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php [QSA,L]

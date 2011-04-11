@@ -1,0 +1,24 @@
+create keyspace blog;
+use blog;
+
+create column family posturl with
+comparator = UTF8Type and
+column_metadata =
+    [
+    {column_name: id, validation_class: UTF8Type},
+    
+];
+  
+create column family post with
+comparator = UTF8Type and
+column_metadata =
+    [
+  
+    {column_name: id, validation_class: UTF8Type},
+    {column_name: title, validation_class: UTF8Type},
+    {column_name: body, validation_class: UTF8Type},
+    {column_name: postdate, validation_class: UTF8Type},
+    {column_name: url, validation_class: UTF8Type},
+    {column_name: tags, validation_class: UTF8Type}
+];
+  
