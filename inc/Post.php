@@ -95,7 +95,7 @@ class Post {
      * @return timestamp  $postdate 
      */
     private function getdate() {
-        $this->postdate = date("m/d/y");
+        $this->postdate = date("m/d/Y");
         return $this->postdate;
     }
 
