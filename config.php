@@ -13,10 +13,11 @@
 
  define('keyspace', 'blog',TRUE);
 /* * *
- * Load cassandra phpcassa library
+ * Load cassandra phpcassa library and twig
  */
 require_once SITE_PATH . '/lib/phpcassa/' . 'connection.php';
 require_once SITE_PATH . '/lib/phpcassa/' . 'columnfamily.php';
+require_once SITE_PATH . '/lib/Twig/lib/Twig/'.'Autoloader.php';
 
 /**
  * Get class name and require filename
