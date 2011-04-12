@@ -1,6 +1,3 @@
-[submodule "phpcassa"]
-	path = phpcassa
-	url = https://github.com/thobbs/phpcassa.git
 [submodule "lib/phpcassa"]
 	path = lib/phpcassa
 	url = https://github.com/thobbs/phpcassa.git
