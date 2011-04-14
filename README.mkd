@@ -4,4 +4,6 @@ A PHP blog using [Apache Cassandra](http://cassandra.apache.org).
 
 * PHP 5.3.2
 * [phpcassa](https://github.com/thobbs/phpcassa)
+* [Twig](http://www.twig-project.org/) 
+
 
