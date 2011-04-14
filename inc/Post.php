@@ -21,9 +21,9 @@ class Post {
      * 
      * @param String    $url  
      */
-    function __construct($url) {
+    function __construct() {
 
-        $this->url = $url;
+        
         $database = new Database();
         $this->database = $database;
     }
@@ -50,6 +50,7 @@ class Post {
          */
         try {
             $this->id = $this->getid($this->url);
+           
         } catch (Exception $exc) {
             $this->database->adddata('posturl', $basicurl, $this->url);
             $this->id = $this->getid($this->url);
@@ -128,6 +129,11 @@ class Post {
     function deletepost($id) {
         $this->id = $id;
         $this->database->delete('post', $this->id);
+    }
+    
+     function deleteurl($url) {
+        $this->url = $url;
+        $this->database->delete('posturl', $this->url);
     }
 
 }
