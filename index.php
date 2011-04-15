@@ -34,7 +34,7 @@ if ($templatevalues ['home'] ) {
          * if post not found show 404 error
          */
          $handler->notfound();
-        $templatevalues ['404'] = $handler->notfound;  
+        $templatevalues ['notfound'] = $handler->notfound;  
     }
 }
 
