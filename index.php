@@ -21,18 +21,20 @@ $template = $twig->loadTemplate('default.twig');
  * templatevalues is use to load data to render using twig
  */
 $templatevalues = array();
-$templatevalues['home'] = '/';
-$templatevalues ['url'] = $handler->setUrl();
-if ($handler->setUrl() == '/') {
-    $templatevalues ['post'] = $post->getallpost();
-    
+$templatevalues ['home'] = $handler->home();
+if ($templatevalues ['home'] ) {
+    $templatevalues ['post'] = $post->getallpost();  
+ 
 } else {
     try {
-        $postid = $post->getid($templatevalues ['url']);
+        $postid = $post->getid($handler->setUrl());
         $templatevalues ['post'] = $post->getpost($postid);
     } catch (Exception $exc) {
-        $template = $twig->loadTemplate('404.twig');
-        header("HTTP/1.0 404 Not Found");
+        /**
+         * if post not found show 404 error
+         */
+         $handler->notfound();
+        $templatevalues ['404'] = $handler->notfound;  
     }
 }
 
