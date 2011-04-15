@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+ {% if url == home %}
+
+ {% for post in post %}
+    
+ <a href="{{ post.url}}"><h1>{{ post.title }} </h1> </a>
+<p>{{post.body}}</p>
+<p>{{ post.tags }}</p>
+<p>{{ post.postdate}}</p>
+
+{% endfor %}
+
+ {% else %}
+    
+<h1>{{ post.title}}</h1>
+<p>{{ post.body }} </p>
+<p>{{ post.tags }}</p>
+<p>{{ post.postdate}}</p>
+ <a href="/posts.php?edit={{ post.url}}">Edit</a>
+ 
+ {% endif %}
+</body>
+</html>
