@@ -1,51 +1,44 @@
 <?php
 
 require_once 'config.php';
+$handler = new Handler();
+$post = new Post();
+/**
+ * register twig
+ */
+Twig_Autoloader::register();
 /**
  * Create handler object
  */
-$handler = new Handler();
+$loader = new Twig_Loader_Filesystem('templates/default');
 
+// initialize Twig environment
+$twig = new Twig_Environment($loader);
 
-
-$post = new Post($handler->setUrl());
-
-
-
+// load template
+$template = $twig->loadTemplate('default.twig');
+/**
+ * templatevalues is use to load data to render using twig
+ */
+$templatevalues = array();
+$templatevalues['home'] = '/';
+$templatevalues ['url'] = $handler->setUrl();
 if ($handler->setUrl() == '/') {
-
-    $posts = $post->getallpost();
-    $count = count($posts);
-
-    for ($i = 0, $size = sizeof($posts); $i < $size; ++$i) {
-        /**
-         * @todo move html out of here
-         */
-        echo '<a href="' . $posts[$i]['url'] . '"><h1>' . $posts[$i]['title'] . '</h1></a>';
-        echo "<p>" . $posts[$i]['body'] . '</p>';
-        echo "<p>" . $posts[$i]['tags'] . '</p>';
-        echo "<p>" . $posts[$i]['postdate'] . '</p>';
-    }
+    $templatevalues ['post'] = $post->getallpost();
+    
 } else {
-    /**
-     * use  to see if the post is in the database if not show 404 page
-     */
     try {
-
-        $postid = $post->getid($handler->setUrl());
-        $posts = $post->getpost($postid);
-        /**
-         * @todo move html out of here
-         */
-        echo '<h1>' . $posts['title'] . '</h1>';
-        echo "<p>" . $posts['body'] . '</p>';
-        echo "<p>" . $posts['tags'] . '</p>';
-        echo "<p>" . $posts['postdate'] . '</p>';
-        echo '<a href="http://'.$_SERVER['HTTP_HOST'].'/posts.php?edit=' . $posts['url'] . '">Edit</a>';
-        
+        $postid = $post->getid($templatevalues ['url']);
+        $templatevalues ['post'] = $post->getpost($postid);
     } catch (Exception $exc) {
-        echo 'not found';
+        $template = $twig->loadTemplate('404.twig');
         header("HTTP/1.0 404 Not Found");
     }
 }
+
+
+/**
+ *  render template
+ */
+echo $template->render($templatevalues);
 ?>
