@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <body>
- {% if url == home %}
+ {% if home %}
 
  {% for post in post %}
     
@@ -12,6 +12,8 @@
 
 {% endfor %}
 
+{% elseif  404 %}
+not found
  {% else %}
     
 <h1>{{ post.title}}</h1>
