@@ -10,17 +10,17 @@ A PHP blog using [Apache Cassandra](http://cassandra.apache.org).
 Twig Template Tags
 ------------------------------
 
-{{ post.title}}
-{{ post.body }} 
-{{ post.tags }}
-{{ post.postdate}}
+    {{ post.title}}
+    {{ post.body }} 
+    {{ post.tags }}
+    {{ post.postdate }}
 
 Get all post loop
 
-{% for post in post %}
-{{ post.title }} 
-{{ post.body }}
-{{ post.tags }}
-{{ post.postdate}}
-{% endfor %}
+    {% for post in post %}
+    {{ post.title }} 
+    {{ post.body }}
+    {{ post.tags }}
+    {{ post.postdate}}
+    {% endfor %}
 
