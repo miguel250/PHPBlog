@@ -1,1 +1,45 @@
-{# empty Twig template #}
+
+<!DOCTYPE HTML>
+<html>
+    <body>
+
+        {% if dashboardindex %}
+        
+        dashboard index
+
+        {% elseif postindex %}
+        POST
+        
+        {% elseif addpost %} 
+
+        <form action="/dashboard/addpost/" method="post">
+            <h1>Add Post</h2>
+                Title:<br \>
+                    <input type="text" name="title" /><br \>
+                    Body:<br \>
+                    <textarea name="body" cols="50" rows="4" id="detail"></textarea><br \>
+                    Tags:<br \>
+                    <input type="text" name="tags" /><br \>
+                    <input type="submit" />
+        </form>
+        {% elseif editpost  %}
+
+        <form action="/dashboard/editpost/" method="post">
+            <h1>Edit Post</h2>
+                Title:<br \>
+                    <input type="text" name="title" value="{{ post.title }}"/><br \>
+                    Body:<br \>
+                    <textarea name="body" cols="50" rows="4" id="detail">{{ post.body }}</textarea><br \>
+                    Tags:<br \>
+                    <input type="text" name="tags" value="{{ post.tags }}" /><br \>
+                    <input type="hidden" name="id" value="{{ post.id }}" />
+                    <input type="hidden" name="url" value="{{ post.url }}" />
+                    <input type="submit" />
+        </form>
+        {% elseif notfound %}
+        
+        Post missing
+
+        {% endif %} 
+    </body>
+</html>
