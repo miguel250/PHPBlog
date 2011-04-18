@@ -19,13 +19,36 @@ class Post {
     /**
      * Constructor
      * 
-     * @param String    $url  
+     * @param array   $database  
      */
     function __construct() {
 
-        
+
         $database = new Database();
         $this->database = $database;
+    }
+
+    function editpost($title, $body, $tags, $id,$url) {
+       
+        $this->title = $title;
+        $this->body = $body;
+        $this->tags = $tags;
+        $this->id = $id;
+        $this->postdate = $this->getdate();
+        $this->url = '/' . $this->getdate() . '/' . str_replace(" ", "-"
+                , $this->title) . '/';
+         $basicurl = array();
+        $basicurl[CassandraUtil::uuid1()] = $this->id;
+        $record['title'] = $this->title;
+        $record['body'] = $this->body;
+        $record['tags'] = $this->tags;
+        $record['postdate'] = $this->postdate;
+        $record['url'] = $this->url;
+        $record['id'] = $this->id;
+        
+        $this->database->adddata('posturl', $basicurl, $this->url);
+        $this->database->adddata('post', $record, $id);
+        return $this->url;
     }
 
     /**
@@ -36,14 +59,14 @@ class Post {
      * @param string $tags
      * @param string $authorid 
      */
-    function addpost($title, $body, $tags) {
+     function addpost($title, $body, $tags) {
         $this->title = $title;
         $this->body = $body;
         $this->tags = $tags;
         $this->postdate = $this->getdate();
         $this->url = '/' . $this->getdate() . '/' . str_replace(" ", "-", $this->title) . '/';
         $basicurl = array();
-        $basicurl['id'] = $this->genuuid();
+        $basicurl[CassandraUtil::uuid1()] = $this->genuuid();
         /**
          * try the id variable if it fails it means that it not in the database
          * so the error will be catch and the id variable will be added
@@ -51,9 +74,11 @@ class Post {
         try {
             $this->id = $this->getid($this->url);
            
+           
         } catch (Exception $exc) {
             $this->database->adddata('posturl', $basicurl, $this->url);
             $this->id = $this->getid($this->url);
+            
         }
 
         $record = array();
@@ -63,7 +88,7 @@ class Post {
        $record['postdate'] = $this->postdate;
         $record['url'] = $this->url;
         $record['id'] = $this->id;
-        $this->database->adddata('post', $record, $this->id);
+       $this->database->adddata('post', $record, $this->id);
        return $this->url;
     }
 
@@ -75,6 +100,7 @@ class Post {
     function getallpost() {
 
         $this->allposts = $this->database->getall('post');
+        
         return $this->allposts;
     }
 
@@ -105,11 +131,13 @@ class Post {
      * @param string $url
      * @return string $get['id'];
      */
-    function getid($url) {
+     function getid($url) {
         $this->url = $url;
-        $get = $this->database->getdata('posturl', $this->url);
-        return $get['id'];
+        $postid = $this->database->getdata('posturl', $this->url);
+        $postkey = array_keys($postid);
+        return $postid[$postkey[0]];
     }
+
 
     /**
      * create uuid using timestamp
@@ -130,8 +158,8 @@ class Post {
         $this->id = $id;
         $this->database->delete('post', $this->id);
     }
-    
-     function deleteurl($url) {
+
+    function deleteurl($url) {
         $this->url = $url;
         $this->database->delete('posturl', $this->url);
     }
