@@ -1,17 +1,14 @@
 create keyspace blog;
 use blog;
 
-create column family posturl with
-comparator = UTF8Type and
-column_metadata =
-    [
-    {column_name: id, validation_class: UTF8Type},
-    
-];
+create column family posturl
+with comparator = TimeUUIDType 
+and gc_grace = 0;
   
 create column family post with
-comparator = UTF8Type and
-column_metadata =
+comparator = UTF8Type 
+and gc_grace = 0
+and column_metadata =
     [
   
     {column_name: id, validation_class: UTF8Type},
