@@ -1,28 +1,28 @@
 <!DOCTYPE HTML>
 <html>
-<body>
- {% if home %}
+    <body>
+        {% if home %}
+ <a href="/dashboard/post/add/"> Add Post</a>
+        {% for post in post %}
 
- {% for post in post %}
-    
- <a href="{{ post.url}}"><h1>{{ post.title }} </h1> </a>
-<p>{{post.body}}</p>
-<p>{{ post.tags }}</p>
-<p>{{ post.postdate}}</p>
+        <a href="{{ post.url}}"><h1>{{ post.title }} </h1> </a>
+        <p>{{post.body}}</p>
+        <p>{{ post.tags }}</p>
+        <p>{{ post.postdate}}</p>
 
-{% endfor %}
+        {% endfor %}
+       
+        {% elseif notfound %}
+        not found
 
-{% elseif notfound %}
-not found
+        {% else %}
 
- {% else %}
-    
-<h1>{{ post.title}}</h1>
-<p>{{ post.body }} </p>
-<p>{{ post.tags }}</p>
-<p>{{ post.postdate}}</p>
- <a href="/posts.php?edit={{ post.url}}">Edit</a>
- 
- {% endif %}
-</body>
+        <h1>{{ post.title}}</h1>
+        <p>{{ post.body }} </p>
+        <p>{{ post.tags }}</p>
+        <p>{{ post.postdate}}</p>
+        <a href="/dashboard/post/edit{{ post.url}}">Edit</a>
+
+        {% endif %}
+    </body>
 </html>
