@@ -35,8 +35,9 @@ class Post {
         $this->tags = $tags;
         $this->id = $id;
         $this->postdate = $this->getdate();
+        $this->titleurl = preg_replace('/[^\w\d\s]+/i', '', $this->title);
         $this->url = '/' . $this->getdate() . '/' . str_replace(" ", "-"
-                , $this->title) . '/';
+                , $this->titleurl) . '/';
          $basicurl = array();
         $basicurl[CassandraUtil::uuid1()] = $this->id;
         $record['title'] = $this->title;
