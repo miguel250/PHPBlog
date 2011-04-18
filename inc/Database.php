@@ -56,25 +56,31 @@ class Database {
      */
     function getall($column) {
         $this->column = $column;
+        $id = new ColumnFamily($this->connect(), 'posturl');
         $add = new ColumnFamily($this->connect(), $this->column);
-        $rows = $add->get_range();
+        $rows = $id->get_range();
         $get = array();
         /**
          * create array using the database key and columns
          */
         foreach ($rows as $key => $columns) {
-            $get[$key] = $columns;
+            $postkey = array_keys($columns);
+            $allpost = $add->get($columns[$postkey[0]]);
+            $get[$columns[$postkey[0]]] = $allpost;
         }
-        $this->allposts = $allposts = array_values($get);
+
+        $this->allposts = $get;
+        // print_r($this->allposts);
         return $this->allposts;
     }
-    function delete($column, $id){
-       $this->id = $id;
+
+    function delete($column, $id) {
+        $this->id = $id;
         $this->column = $column;
-         $add = new ColumnFamily($this->connect(), $this->column);
-         $add->remove($this->id); 
-         return TRUE;
+        $add = new ColumnFamily($this->connect(), $this->column);
+        $add->remove($this->id);
     }
+
 }
 
 ?>
