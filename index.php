@@ -3,6 +3,7 @@
 require_once 'config.php';
 $handler = new Handler();
 $post = new Post();
+ $dashboard = new  Dashboard($handler->seturl());
 /**
  * register twig
  */
@@ -21,10 +22,22 @@ $template = $twig->loadTemplate('default.twig');
  * templatevalues is use to load data to render using twig
  */
 $templatevalues = array();
-$templatevalues ['home'] = $handler->home();
-if ($templatevalues ['home'] ) {
-    $templatevalues ['post'] = $post->getallpost();  
- 
+/**
+ * check if user is at the home page
+ */
+if ($handler->home()) {
+    $templatevalues ['post'] = $post->getallpost();
+    $templatevalues ['home'] = $handler->home();
+    /**
+     * check if not home or looking at a post the user is at the dashboard
+     */
+} elseif ($handler->dashboard()) {
+   
+    $template = $twig->loadTemplate('dashboard.twig');
+    echo $template->render($dashboard->dashtemplate());
+    /**
+     * check if  not home or dashboard user is at a post
+     */
 } else {
     try {
         $postid = $post->getid($handler->setUrl());
@@ -33,8 +46,8 @@ if ($templatevalues ['home'] ) {
         /**
          * if post not found show 404 error
          */
-         $handler->notfound();
-        $templatevalues ['notfound'] = $handler->notfound;  
+        $handler->notfound();
+        $templatevalues ['notfound'] = $handler->notfound;
     }
 }
 
